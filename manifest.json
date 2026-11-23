@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "io.github.spconley98.nv-radio",
+  "name": "New Vegas Radio",
+  "version": "1.0.0",
+  "author": "spconley98",
+  "license": "MIT",
+  "description": "Plays Radio New Vegas and other Fallout stations from fallout.fm in the bar",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "Widget.qml"
+  },
+  "barWidget": {
+    "displayName": "New Vegas Radio",
+    "description": "Click to play Radio New Vegas; right-click for the next station, scroll for volume.",
+    "category": "Media",
+    "allowMultiple": false,
+    "defaultSection": "left"
+  }
+}
