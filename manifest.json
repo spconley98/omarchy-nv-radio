@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "id": "io.github.spconley98.nv-radio",
   "name": "New Vegas Radio",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "spconley98",
   "license": "MIT",
-  "description": "Plays Radio New Vegas and other Fallout stations from fallout.fm in the bar",
+  "description": "Fallout radio in the bar, with a green-screen tuner for all ten fallout.fm stations",
   "kinds": [
     "bar-widget"
   ],
@@ -14,7 +14,7 @@
   },
   "barWidget": {
     "displayName": "New Vegas Radio",
-    "description": "Click to play Radio New Vegas; right-click for the next station, scroll for volume.",
+    "description": "Click for the tuner; middle-click plays or stops, right-click changes station, scroll sets the volume.",
     "category": "Media",
     "allowMultiple": false,
     "defaultSection": "left"
