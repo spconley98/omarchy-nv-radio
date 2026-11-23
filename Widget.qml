@@ -48,7 +48,11 @@ Panel {
   property bool started: false
   readonly property bool playing: wantPlaying
   readonly property bool live: player.running && !buffering && !noSignal
-  readonly property string socketPath: (Quickshell.env("XDG_RUNTIME_DIR") || "/tmp") + "/omarchy-nv-radio.sock"
+  // The socket lives only in the private runtime directory, never a shared
+  // /tmp, and carries a per-instance suffix so two shells can't collide.
+  readonly property string runtimeDir: Quickshell.env("XDG_RUNTIME_DIR") || ""
+  readonly property string socketPath: runtimeDir === "" ? ""
+    : runtimeDir + "/omarchy-nv-radio-" + Date.now().toString(36) + Math.floor(Math.random() * 1e9).toString(36) + ".sock"
 
   // ---------------------------------------------------------- settings
   readonly property var palettes: ({
@@ -71,7 +75,7 @@ Panel {
   Process {
     id: player
     command: ["mpv", "--no-video", "--force-window=no", "--really-quiet", "--no-terminal",
-      "--cache=yes", "--network-timeout=10", "--volume=" + root.volume,
+      "--cache=yes", "--network-timeout=10", "--tls-verify=yes", "--volume=" + root.volume,
       "--title=New Vegas Radio", "--input-ipc-server=" + root.socketPath,
       root.stations[root.station].url]
     onRunningChanged: {
@@ -82,6 +86,7 @@ Panel {
         ipc.connected = false
         connectRetry.stop()
         stallTimer.stop()
+        stableTimer.stop()
         root.nowPlaying = ""
         root.buffering = false
         // mpv quit on its own while the radio should be on: the stream is
@@ -116,9 +121,17 @@ Panel {
       stallTimer.stop()
       if (!buffering && player.running) {
         root.noSignal = false
-        root.retries = 0
+        stableTimer.restart()
       }
     }
+  }
+
+  // The backoff starts over only after a minute of steady playback, so a
+  // station that keeps connecting and dropping still backs off.
+  Timer {
+    id: stableTimer
+    interval: 60000
+    onTriggered: if (root.live) root.retries = 0
   }
 
   // A short burst of radio static while changing stations: generated noise.
@@ -136,6 +149,10 @@ Panel {
   }
 
   function play() {
+    if (root.socketPath === "") {
+      console.warn("nv-radio: XDG_RUNTIME_DIR is not set; not starting playback")
+      return
+    }
     root.wantPlaying = true
     root.noSignal = false
     root.retries = 0
@@ -195,6 +212,14 @@ Panel {
     if (player.running) root.send(["set_property", "volume", root.volume])
   }
 
+  // Stream titles come from the network: one line, no control characters,
+  // and a sane length before they reach the tooltip or the history.
+  function cleanTitle(value) {
+    if (typeof value !== "string") return ""
+    return value.replace(/[\u0000-\u001f\u007f-\u009f\u2028\u2029]+/g, " ")
+      .replace(/\s+/g, " ").trim().slice(0, 256)
+  }
+
   function remember(title) {
     if (title === "" || (root.history.length && root.history[0].title === title)) return
     var list = [{ title: title, tag: root.stations[root.station].tag }].concat(root.history)
@@ -225,7 +250,7 @@ Panel {
         try { msg = JSON.parse(line) } catch (e) { return }
         if (msg.event !== "property-change") return
         if (msg.name === "media-title") {
-          var title = String(msg.data || "")
+          var title = root.cleanTitle(msg.data)
           // Before the stream sends a song title, mpv reports the file name.
           root.nowPlaying = /falloutfm\d+\.ogg$/.test(title) || title === "None" ? "" : title
           root.remember(root.nowPlaying)
@@ -257,8 +282,8 @@ Panel {
     onLoaded: {
       try {
         var s = JSON.parse(text())
-        if (s.station >= 0 && s.station < root.stations.length) root.station = s.station
-        if (s.volume >= 0 && s.volume <= 100) root.volume = s.volume
+        if (Number.isInteger(s.station) && s.station >= 0 && s.station < root.stations.length) root.station = s.station
+        if (Number.isInteger(s.volume) && s.volume >= 0 && s.volume <= 100) root.volume = s.volume
       } catch (e) {}
       root.startUp()
     }

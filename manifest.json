@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "io.github.spconley98.nv-radio",
   "name": "New Vegas Radio",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "author": "spconley98",
   "license": "MIT",
   "description": "Fallout radio in the bar, with a green-screen tuner for all ten fallout.fm stations",
