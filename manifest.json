@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "io.github.spconley98.nv-radio",
   "name": "New Vegas Radio",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "spconley98",
   "license": "MIT",
   "description": "Fallout radio in the bar, with a green-screen tuner for all ten fallout.fm stations",
@@ -17,6 +17,76 @@
     "description": "Click for the tuner; middle-click plays or stops, right-click changes station, scroll sets the volume.",
     "category": "Media",
     "allowMultiple": false,
-    "defaultSection": "left"
+    "defaultSection": "left",
+    "defaults": {
+      "phosphor": "green",
+      "tuningStatic": true,
+      "autoplay": false,
+      "startStation": "Last played",
+      "rememberVolume": true,
+      "startVolume": 60
+    },
+    "schema": [
+      {
+        "key": "phosphor",
+        "type": "enum",
+        "label": "Screen color",
+        "options": [
+          "green",
+          "amber",
+          "blue",
+          "white"
+        ],
+        "defaultValue": "green",
+        "description": "The tuner's phosphor color. New Vegas's own screen is amber."
+      },
+      {
+        "key": "tuningStatic",
+        "type": "boolean",
+        "label": "Static when changing stations",
+        "defaultValue": true
+      },
+      {
+        "key": "autoplay",
+        "type": "boolean",
+        "label": "Play when the desktop starts",
+        "defaultValue": false
+      },
+      {
+        "key": "startStation",
+        "type": "enum",
+        "label": "Station at start",
+        "options": [
+          "Last played",
+          "Radio New Vegas",
+          "Galaxy News Radio",
+          "Diamond City Radio",
+          "Classical Radio (Fallout 4)",
+          "More Where That Came From",
+          "Appalachia Radio",
+          "Classical Radio (Fallout 76)",
+          "Fallout 2 Soundtrack",
+          "Fallout Soundtrack",
+          "Fallout.FM Mix"
+        ],
+        "defaultValue": "Last played"
+      },
+      {
+        "key": "rememberVolume",
+        "type": "boolean",
+        "label": "Remember the last volume",
+        "defaultValue": true
+      },
+      {
+        "key": "startVolume",
+        "type": "integer",
+        "label": "Volume at start (%)",
+        "min": 0,
+        "max": 100,
+        "step": 5,
+        "defaultValue": 60,
+        "description": "Used when the last volume isn't remembered."
+      }
+    ]
   }
 }
