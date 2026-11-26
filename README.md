@@ -2,7 +2,7 @@
 
 An [Omarchy](https://omarchy.org) bar widget that plays Fallout radio stations while you work, with a green-phosphor terminal tuner for picking them. All ten streams from the fan-run [fallout.fm](https://fallout.fm) are on it.
 
-![The tuner playing Galaxy News Radio](preview.png)
+![Tuning fallout.fm stations, then building a station from your own music](demo.gif)
 
 - **Click** to open the tuner: click a station to play it, or click the one playing to stop it
 - **Middle-click** to play or stop without opening it
