@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "id": "io.github.spconley98.nv-radio",
   "name": "New Vegas Radio",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "author": "spconley98",
   "license": "MIT",
-  "description": "Fallout radio in the bar, with a green-screen tuner for all ten fallout.fm stations",
+  "description": "Fallout radio in the bar, with a green-screen tuner for all ten fallout.fm stations and stations you build from your own music",
   "kinds": [
     "bar-widget"
   ],
@@ -24,7 +24,8 @@
       "autoplay": false,
       "startStation": "Last played",
       "rememberVolume": true,
-      "startVolume": 60
+      "startVolume": 60,
+      "musicFolder": "~/Music"
     },
     "schema": [
       {
@@ -86,6 +87,13 @@
         "step": 5,
         "defaultValue": 60,
         "description": "Used when the last volume isn't remembered."
+      },
+      {
+        "key": "musicFolder",
+        "type": "string",
+        "label": "Music folder",
+        "defaultValue": "~/Music",
+        "description": "Where your own stations pick songs from. Subfolders are included."
       }
     ]
   }
