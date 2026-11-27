@@ -5,7 +5,7 @@ import qs.Commons
 import qs.Commons as Commons
 import qs.Ui
 
-// New Vegas Radio: Fallout radio stations from fallout.fm, played with mpv.
+// Fallout Radio: Fallout radio stations from fallout.fm, played with mpv.
 //
 // Left-click opens a phosphor-screen tuner listing every station. Middle-click
 // plays or stops, right-click moves to the next station, and scrolling changes
@@ -254,7 +254,7 @@ Panel {
     id: player
     command: ["mpv", "--no-video", "--force-window=no", "--really-quiet", "--no-terminal",
       "--cache=yes", "--network-timeout=10", "--tls-verify=yes", "--volume=" + root.volume,
-      "--title=New Vegas Radio", "--input-ipc-server=" + root.socketPath]
+      "--title=Fallout Radio", "--input-ipc-server=" + root.socketPath]
       .concat(root.current.custom ? ["--loop-playlist=inf", "--"].concat(root.queue) : [root.current.url])
     onRunningChanged: {
       if (running) {

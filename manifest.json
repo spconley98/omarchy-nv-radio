@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
   "id": "io.github.spconley98.nv-radio",
-  "name": "New Vegas Radio",
-  "version": "1.3.0",
+  "name": "Fallout Radio",
+  "version": "1.3.1",
   "author": "spconley98",
   "license": "MIT",
-  "description": "Fallout radio in the bar, with a green-screen tuner for all ten fallout.fm stations and stations you build from your own music",
+  "description": "Fallout radio in the bar: Radio New Vegas, Galaxy News Radio, Diamond City Radio, Appalachia Radio and six more fallout.fm stations on a green-screen tuner, plus stations you build from your own music",
   "kinds": [
     "bar-widget"
   ],
@@ -13,7 +13,7 @@
     "barWidget": "Widget.qml"
   },
   "barWidget": {
-    "displayName": "New Vegas Radio",
+    "displayName": "Fallout Radio",
     "description": "Click for the tuner; middle-click plays or stops, right-click changes station, scroll sets the volume.",
     "category": "Media",
     "allowMultiple": false,

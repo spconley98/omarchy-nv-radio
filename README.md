@@ -1,4 +1,4 @@
-# New Vegas Radio
+# Fallout Radio
 
 An [Omarchy](https://omarchy.org) bar widget that plays Fallout radio stations while you work, with a green-phosphor terminal tuner for picking them. All ten streams from the fan-run [fallout.fm](https://fallout.fm) are on it.
 
